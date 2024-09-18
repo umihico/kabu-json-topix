@@ -8,7 +8,7 @@ response = requests.get(url)
 tree = html.fromstring(response.content)
 rows = tree.xpath("//div[@class='component-normal-table']/table/tr")
 [td0, td1, td2, td3, td4, td5] = [td.text for td in rows[0].xpath(".//th")]
-if ["取引日", "始値", "高値", "安値", "終値", "前日比"] != [td for td in [td0, td1, td2, td3, td4, td5]]:
+if ["取引日", "始値", "高値", "安値", "前日比"] != [td0, td1, td2, td3, td5] or td4 not in ["終値", "現在値"]:
     raise Exception(f"""Table header is not as expected: {td0.text}, {
                     td1.text}, {td2.text}, {td3.text}, {td4.text}, {td5.text}""")
 [td0, td1, td2, td3, td4, td5] = [td.text_content().strip()
